@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
 namespace Gateway.Api
 {
@@ -17,7 +19,12 @@ namespace Gateway.Api
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+                    var builder = new ConfigurationBuilder()
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                        .AddJsonFile("configuration.json")
+                        .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -25,6 +32,7 @@ namespace Gateway.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOcelot(Configuration);
             services.AddControllers();
         }
 
@@ -35,7 +43,7 @@ namespace Gateway.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseOcelot().Wait();
             app.UseHttpsRedirection();
 
             app.UseRouting();

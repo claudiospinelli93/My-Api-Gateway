@@ -1,0 +1,29 @@
+{
+    "Routes": [
+      {
+        "DownstreamPathTemplate": "/{everything}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+              "Host": "catalogapi",
+              "Port": 80
+          }
+        ],
+        "UpstreamPathTemplate": "/catalogapi/{everything}",
+        "UpstreamHttpMethod": [ "POST", "PUT", "GET", "Delete", "Options" ]
+      },
+      {
+        "DownstreamPathTemplate": "/{everything}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+              "Host": "bakeryapi",
+              "Port": 80
+          }
+        ],
+        "UpstreamPathTemplate": "/bakeryapi/{everything}",
+        "UpstreamHttpMethod": [ "POST", "PUT", "GET", "Delete", "Options" ]
+      }
+    ],
+    "GlobalConfiguration": {}
+}
