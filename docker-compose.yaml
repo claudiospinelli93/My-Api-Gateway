@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  bakeryapi:
+    build:
+      context: ./Bakery.Api
+      dockerfile: Dockerfile
+    ports:
+      - "5001:80"
+  catalogapi:
+    build:
+      context: ./Catalog.Api
+      dockerfile: Dockerfile
+    ports:
+      - "6001:80"
+  gatewayapi:
+    build:
+      context: ./Gateway.Api
+      dockerfile: Dockerfile
+    ports:
+      - "7001:80"
